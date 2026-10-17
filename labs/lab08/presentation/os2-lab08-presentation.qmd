@@ -19,6 +19,8 @@ institute:
 license: CC BY
 date: today
 date-format: "YYYY-MM-DD"
+header-includes:
+  - \usepackage{tikz}
 ---
 
 # Информация
@@ -72,16 +74,29 @@ date-format: "YYYY-MM-DD"
 
 ## cron --- по расписанию, at --- один раз
 
-```{mermaid}
-%%| fig-width: 4.6
-%%| fig-height: 2.4
-flowchart LR
-  A["crontab -e"] --> C(("crond"))
-  B["/etc/cron.d"] --> C
-  C --> R["регулярно"]
-  D["at 22:27"] --> E(("atd"))
-  E --> F["один раз"]
-```
+\begin{center}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[font=\scriptsize]
+  \draw[thick] (4.0,1.0) rectangle (7.0,2.4);
+  \node at (5.5,1.7) {\texttt{crond}};
+  \draw[->,thick] (1.7,2.0) -- (3.95,2.0);
+  \node[font=\tiny] at (0.8,2.0) {\texttt{crontab -e}};
+  \draw[->,thick] (1.7,1.4) -- (3.95,1.4);
+  \node[font=\tiny] at (0.8,1.4) {\texttt{/etc/cron.d}};
+  \draw[->,thick] (7.05,1.7) -- (9.8,1.7);
+  \node[font=\tiny] at (10.6,1.7) {регулярно};
+
+  \draw[thick] (4.0,-0.3) rectangle (7.0,0.5);
+  \node at (5.5,0.1) {\texttt{atd}};
+  \draw[->,thick] (1.7,0.1) -- (3.95,0.1);
+  \node[font=\tiny] at (0.8,0.1) {\texttt{at 22:27}};
+  \draw[->,thick] (7.05,0.1) -- (9.8,0.1);
+  \node[font=\tiny] at (10.6,0.1) {один раз};
+\end{tikzpicture}%
+}
+\end{center}
+
+cron повторяет задание по расписанию, at выполняет его один раз и удаляет из очереди.
 
 ## Строка crontab: пять полей времени и команда
 
